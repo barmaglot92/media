@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SseModule } from './sse/sse.module';
 import { TorrentModule } from './torrent/torrent.module';
-import { TorrentService } from './torrent/torrent.service';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TorrentModule, ConfigModule.forRoot()],
+  imports: [SseModule, TorrentModule, ConfigModule.forRoot()],
   controllers: [AppController],
-  providers: [AppService, TorrentService],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -1,18 +1,14 @@
 import * as fs from 'fs/promises';
-import * as path from 'path';
+import { WORK_DIR } from './workdir';
 
 export const initializeWorkDir = async () => {
-  const paths = [
-    path.join(process.cwd(), process.env.TEMP_DIR),
-    path.join(process.cwd(), process.env.TORRENT_DIR),
-    path.join(process.cwd(), process.env.DATA_DIR),
-  ];
+  const paths = Object.keys(WORK_DIR);
 
-  for (const path of paths) {
+  for (const key of paths) {
     try {
-      await fs.stat(path);
+      await fs.stat(WORK_DIR[key]);
     } catch {
-      await fs.mkdir(path, { recursive: true });
+      await fs.mkdir(WORK_DIR[key], { recursive: true });
     }
   }
 };

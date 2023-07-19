@@ -1,8 +1,10 @@
 import {
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
+  Param,
   ParseFilePipe,
   Post,
   UploadedFile,
@@ -11,6 +13,8 @@ import {
 import { AppService } from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
+import sanitizeFilename from 'sanitize-filename';
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -18,6 +22,11 @@ export class AppController {
   @Get('/list')
   list() {
     return this.appService.getList();
+  }
+
+  @Delete('/delete/:name')
+  delete(@Param() { name }: { name: string }) {
+    return this.appService.delete(name);
   }
 
   @Post('/upload')
@@ -33,6 +42,9 @@ export class AppController {
     )
     file: Express.Multer.File,
   ) {
+    const filename = decodeURIComponent(file.originalname);
+    file.originalname = sanitizeFilename(filename);
+
     return this.appService.downloadTorrent(file);
   }
 }

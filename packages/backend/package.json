@@ -26,15 +26,18 @@
     "@nestjs/platform-express": "^10.0.0",
     "@types/fs-extra": "^11.0.1",
     "@types/glob": "^8.1.0",
+    "@types/lodash": "^4.14.195",
     "@types/multer": "^1.4.7",
     "@types/webtorrent": "^0.109.3",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.3",
+    "lodash": "^4.17.21",
     "multer": "^1.4.5-lts.1",
     "nestjs-s3": "^2.0.1",
     "prisma": "^5.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
+    "sanitize-filename": "^1.6.3",
     "webtorrent": "^2.1.12"
   },
   "devDependencies": {

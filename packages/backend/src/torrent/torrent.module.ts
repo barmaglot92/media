@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TorrentService } from './torrent.service';
 import { ConfigModule } from '@nestjs/config';
+import { SseModule } from 'src/sse/sse.module';
+import { TorrentService } from './torrent.service';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [SseModule, ConfigModule.forRoot()],
   providers: [TorrentService],
+  exports: [TorrentService],
 })
 export class TorrentModule {}

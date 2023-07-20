@@ -9,6 +9,7 @@ import {
   Post,
   UploadedFile,
   UseInterceptors,
+  Headers,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -34,10 +35,7 @@ export class AppController {
   upload(
     @UploadedFile(
       new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: 1024 * 1024 }),
-          new FileTypeValidator({ fileType: 'application/x-bittorrent' }),
-        ],
+        validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 })],
       }),
     )
     file: Express.Multer.File,

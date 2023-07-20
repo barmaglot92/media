@@ -3,15 +3,14 @@ services:
     image: barmaglot92/media-backend:latest
     restart: on-failure
     volumes:
-      - ./movies:/app/workDir/data
+      - /movies:/app/workDir/data
     expose:
       - 3000
 
   frontend:
     image: barmaglot92/media-frontend:latest
     restart: on-failure
-    network_mode: host
     links:
       - "backend"
-    expose:
-      - 80
+    ports:
+      - "80:80"

@@ -8,8 +8,7 @@ export type DownloadItemProps = {
 };
 
 export const DownloadItem = ({ item }: DownloadItemProps) => {
-  const [deleteDownload, { isLoading }] =
-    downloadAPI.useDeleteDownloadMutation();
+  const [deleteDownload] = downloadAPI.useDeleteDownloadMutation();
 
   const handleDelete = () => {
     void deleteDownload(item.name);

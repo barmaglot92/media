@@ -1,0 +1,10 @@
+FROM nginx:1.25
+
+# Create app directory
+WORKDIR /app
+
+# Bundle app source
+COPY ./packages/frontend/dist  /usr/share/nginx/html
+COPY ./packages/frontend/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80

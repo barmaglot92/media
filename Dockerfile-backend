@@ -1,0 +1,12 @@
+FROM gcr.io/distroless/nodejs18-debian11
+
+# Create app directory
+WORKDIR /app
+
+# Bundle app source
+COPY ./node_modules ./node_modules
+COPY ./packages/backend/node_modules ./node_modules
+COPY ./packages/backend/dist ./dist
+
+EXPOSE 3000
+CMD [ "dist/main.js" ]

@@ -10,6 +10,8 @@ services:
   frontend:
     image: barmaglot92/media-frontend:latest
     restart: on-failure
+    volumes:
+      - /movies:/app/public
     links:
       - "backend"
     ports:

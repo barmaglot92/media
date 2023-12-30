@@ -1,7 +1,7 @@
 services:
   backend:
     image: barmaglot92/media-backend:latest
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - /movies:/app/workDir/data
     expose:
@@ -9,7 +9,7 @@ services:
 
   frontend:
     image: barmaglot92/media-frontend:latest
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - /movies:/app/public
     links:

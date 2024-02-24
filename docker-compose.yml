@@ -3,7 +3,7 @@ services:
     image: barmaglot92/media-backend:latest
     restart: unless-stopped
     volumes:
-      - /movies:/app/workDir/data
+      - /videos:/app/workDir/data
     expose:
       - 3000
 
@@ -11,7 +11,7 @@ services:
     image: barmaglot92/media-frontend:latest
     restart: unless-stopped
     volumes:
-      - /movies:/app/public
+      - /videos:/app/public
     links:
       - "backend"
     ports:

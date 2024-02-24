@@ -60,7 +60,7 @@ export class TorrentService implements OnModuleInit {
     torrent.on('download', debouncedHandleProgress);
 
     torrent.on('done', async () => {
-      torrent.destroy({ destroyStore: true }, async (err) => {
+      torrent.destroy({}, async (err) => {
         if (err) {
           console.log('remove torrent error', err);
         } else {

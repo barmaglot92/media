@@ -26,11 +26,12 @@ export class AppService implements OnModuleInit {
     await Promise.all([
       fs.rm(path.join(WORK_DIR.data, name), { recursive: true, force: true }),
       fs.rm(path.join(WORK_DIR.tmp, name), { recursive: true, force: true }),
-      fs.rm(path.join(WORK_DIR.torrents, name), {
-        recursive: true,
+      fs.rm(path.join(WORK_DIR.torrents, `${name}.torrent`), {
         force: true,
       }),
     ]);
+
+    await this.torrentService.removeTorrent(name);
   }
 
   async getList() {

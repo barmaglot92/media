@@ -5,10 +5,12 @@ import * as fsExtra from 'fs-extra';
 import { WORK_DIR } from 'src/utils/workdir';
 import { SseService } from 'src/sse/sse.service';
 import { throttle } from 'lodash';
+import WebTorrent from 'webtorrent';
 
 @Injectable()
 export class TorrentService implements OnModuleInit {
-  torrentClient;
+  private torrentClient: WebTorrent.Instance;
+  private torrents: Record<string, WebTorrent.Torrent> = {};
 
   constructor(private readonly sseService: SseService) {}
 
@@ -17,12 +19,30 @@ export class TorrentService implements OnModuleInit {
     this.torrentClient = new WebTorrent();
   };
 
+  removeTorrent = async (name: string) => {
+    return new Promise((resolve, reject) => {
+      if (this.torrents[name]) {
+        this.torrents[name].destroy({ destroyStore: true }, (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(true);
+          }
+        });
+      } else {
+        resolve(true);
+      }
+    });
+  };
+
   downloadTorrent = async (torrentPath: string) => {
     const torrentName = path.parse(torrentPath).name;
 
     const torrent = this.torrentClient.add(torrentPath, {
       path: path.join(WORK_DIR.tmp, torrentName),
     });
+
+    this.torrents[torrentName] = torrent;
 
     const debouncedHandleProgress = throttle(
       () => {
@@ -40,7 +60,7 @@ export class TorrentService implements OnModuleInit {
     torrent.on('download', debouncedHandleProgress);
 
     torrent.on('done', async () => {
-      torrent.destroy(async (err) => {
+      torrent.destroy({ destroyStore: true }, async (err) => {
         if (err) {
           console.log('remove torrent error', err);
         } else {
@@ -58,6 +78,8 @@ export class TorrentService implements OnModuleInit {
                 [torrentName]: 100,
               },
             });
+
+            delete this.torrents[torrentName];
           } catch (err) {
             console.log(err);
           }

@@ -41,7 +41,7 @@ export class AppController {
     file: Express.Multer.File,
   ) {
     const filename = decodeURIComponent(file.originalname);
-    file.originalname = sanitizeFilename(filename);
+    file.originalname = sanitizeFilename(filename).replace(/[^\w\.]/g, '');
 
     return this.appService.downloadTorrent(file);
   }

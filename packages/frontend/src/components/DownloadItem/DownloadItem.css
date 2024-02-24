@@ -12,4 +12,8 @@
   &__deleteBtn {
     background-color: #e11b1b;
   }
+
+  &__ready {
+    background-color: green;
+  }
 }

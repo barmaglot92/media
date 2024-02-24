@@ -23,6 +23,10 @@ export const DownloadItem = ({ item }: DownloadItemProps) => {
           delete
         </button>
         &nbsp;&nbsp;
+        {item.status === "ready" && (
+          <button className="DownloadItem__ready">ready</button>
+        )}
+        &nbsp;&nbsp;
         {item.status === "processing" &&
           item.progress &&
           `${(item.progress * 100).toFixed(0)}%`}
